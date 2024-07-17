@@ -29,6 +29,7 @@ class Characters(Base):
     heigth = Column(Integer,nullable=False)
     mass = Column(Integer,nullable=False)
     hair_color = Column(String(50),nullable=False)
+    favorites = relationship("favorite", back_populates="characters")
 
 class Planets(Base):
     __tablename__ = 'planets'
@@ -38,6 +39,7 @@ class Planets(Base):
     rotation_period = Column(Integer,nullable=False)
     orbital_period = Column(Integer,nullable=False)
     diameter = Column(Integer,nullable=False)
+    favorites = relationship("favorite", back_populates="planets")
 
 class Favorite(Base):
     __tablename__ = "favorite"
@@ -45,6 +47,9 @@ class Favorite(Base):
     id_user = Column(Integer, ForeignKey("user.id"))
     id_characters = Column(Integer, ForeignKey("characters.id"))
     id_planets = Column(Integer, ForeignKey("planets.id"))
+    user = relationship("user", back_populates="favorites")
+    characters = relationship("characters", back_populates="favorites")
+    planets = relationship("planets", back_populates="favorites")
 
 
 ## Draw from SQLAlchemy base
